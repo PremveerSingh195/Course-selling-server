@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-mongoose.connect(
-  "mongodb+srv://youtube:SdcZbvtt5fQEXsSy@harkiratclass.3incwu1.mongodb.net/"
-);
+// mongoose.connect(
+//   "mongodb+srv://youtube:SdcZbvtt5fQEXsSy@harkiratclass.3incwu1.mongodb.net/"
+// );
 console.log("connected to");
 
 const Schema = mongoose.Schema;
