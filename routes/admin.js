@@ -4,8 +4,6 @@ const { adminModel, courseModel } = require("../db");
 const jwt = require("jsonwebtoken");
 const { adminMiddleware } = require("../middleware/admin");
 
-
-
 adminRouter.post("/signup", async function (req, res) {
   const { email, password, firstname, lastname } = req.body;
 
@@ -47,7 +45,7 @@ adminRouter.post("/signin", async function (req, res) {
   }
 });
 
-adminRouter.post("/createCourse", adminMiddleware, async function (req, res) {
+adminRouter.post("/course", adminMiddleware, async function (req, res) {
   const adminId = req.userId;
 
   const { title, description, imageUrl, price } = req.body;
@@ -66,6 +64,40 @@ adminRouter.post("/createCourse", adminMiddleware, async function (req, res) {
   });
 });
 
+adminRouter.put("/course", adminMiddleware, async function (req, res) {
+  const adminId = req.userId;
+
+  const { title, description, imageUrl, price, courseId } = req.body;
+
+  const course = await courseModel.updateOne(
+    { _id: courseId, creatorId: adminId },
+    {
+      title: title,
+      description: description,
+      imageUrl: imageUrl,
+      price: price,
+    }
+  );
+
+  res.json({
+    message: "Course updated successfully",
+    courseId: course._id,
+  });
+});
+
+adminRouter.get("/course/bulk", adminMiddleware, async function (req, res) {
+  const adminId = req.userId;
+
+  const courses = await courseModel.find({
+    creatorId: adminId,
+  });
+
+  res.json({
+    message: "Course updated",
+    courses,
+  });
+});
+
 module.exports = {
   adminRouter: adminRouter,
-};
+};  
