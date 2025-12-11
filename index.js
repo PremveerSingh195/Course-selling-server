@@ -13,9 +13,7 @@ app.use("/api/v1/course", courseRouter);
 app.use("/api/v1/admin", adminRouter);
 
 async function main() {
-  await mongoose.connect(
-    "mongodb+srv://youtube:SdcZbvtt5fQEXsSy@harkiratclass.3incwu1.mongodb.net/course-selling-app"
-  );
+  await mongoose.connect(process.env.MONGO_URI);
   app.listen(8000);
   console.log("Server is running on PORT 3000");
 }
